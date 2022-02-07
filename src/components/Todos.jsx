@@ -1,34 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TodoForm from './TodoForm';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { markComplete } from '../store/actions/TodoActions';
 
-const Todos = () => {
-    const [todos, setTodos] = useState([
-        {
-            id: 1,
-            title: 'Viec 1',
-            completed: false,
-        },
-        {
-            id: 2,
-            title: 'Viec 2',
-            completed: false,
-        },
-        {
-            id: 3,
-            title: 'Viec 3',
-            completed: false,
-        },
-    ]);
-
+const Todos = ({ todos, markComplete }) => {
     return (
         <div>
             <div className='todo-list'>
                 <TodoForm />
                 <ul>
                     {todos.map((todo) => (
-                        <li key={todo.id}>
+                        <li
+                            key={todo.id}
+                            className={todo.completed ? 'completed' : ''}
+                        >
                             {todo.title}
-                            <input type='checkbox' />
+                            <input
+                                type='checkbox'
+                                onChange={() => markComplete(todo.id)}
+                            />
                             <button>Delete</button>
                         </li>
                     ))}
@@ -38,4 +29,13 @@ const Todos = () => {
     );
 };
 
-export default Todos;
+Todos.propTypes = {
+    todos: PropTypes.array.isRequired,
+    markComplete: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+    todos: state.myTodos.todos,
+});
+
+export default connect(mapStateToProps, { markComplete })(Todos);
