@@ -1,4 +1,4 @@
-import { ADD_TODO, MARK_COMPLETE } from "./types";
+import { ADD_TODO, DELETE_TODO, MARK_COMPLETE } from "./types";
 
 const initialState = {
     todos: [
@@ -38,7 +38,12 @@ const todoReducer = (state = initialState, action) => {
         case ADD_TODO:
             return {
                 ...state,
-                todos: [...state.todos, payload]
+                todos: [payload, ...state.todos]
+            }
+        case DELETE_TODO:
+            return {
+                ...state,
+                todos: state.todos.filter(todo => todo.id !== payload)
             }
 
         default:

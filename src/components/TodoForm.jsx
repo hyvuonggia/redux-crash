@@ -4,7 +4,7 @@ import { addTodo } from '../store/actions/TodoActions';
 import { v4 as uuid } from 'uuid';
 import PropTypes from 'prop-types';
 
-const TodoForm = ({ addTodo }) => {
+const TodoForm = ({todos, addTodo }) => {
     const [title, setTitle] = useState('');
 
     const handleChange = (event) => {
@@ -43,6 +43,8 @@ TodoForm.propTypes = {
     addTodo: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = () => {
+    
+};
 
 export default connect(mapStateToProps, { addTodo })(TodoForm);
